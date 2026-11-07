@@ -1,0 +1,7 @@
+# Textos com fim de linha normalizado
+*.md   text eol=lf
+*.py   text eol=lf
+# CSVs e arquivos do Power BI guardados exatamente como estão
+*.csv  -text
+*.json -text
+*.pbix binary

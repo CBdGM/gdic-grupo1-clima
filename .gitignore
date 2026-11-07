@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Saída temporária do baixar.py (a versão oficial fica em data/)
+dados_clima/
+
+# Arquivos temporários do Windows / Office / Power BI
+Thumbs.db
+desktop.ini
+~$*
+*.pbix.bak
+.pbi/localSettings.json
+.pbi/cache.abf
+
+# Editores
+.vscode/
