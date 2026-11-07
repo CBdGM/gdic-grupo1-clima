@@ -5,6 +5,13 @@ Dashboard em **Power BI** sobre o clima da América Latina: aquecimento por cida
 
 **Integrantes:** _(preencher)_
 **Apresentação:** 16 ou 19/11/2026
+**Status:** base de dados validada (v1.1.0) · dashboard em construção
+
+## Perguntas que o dashboard responde
+1. As cidades da América Latina estão esquentando? Quanto, por década?
+2. Como o El Niño e a La Niña mudam a chuva e a temperatura em cada região?
+3. Eventos extremos recentes (enchentes do RS em 2024, chuvas de Recife em 2022, seca da Amazônia em 2023) aparecem nos dados?
+4. O que esperar para os próximos meses (previsão)?
 
 ---
 
@@ -51,6 +58,12 @@ docs/
 powerbi/                      arquivos do dashboard
 CHANGELOG.md                  histórico de versões
 ```
+
+## Como usar no Power BI
+
+1. **Obter dados → Texto/CSV** → `data/clima_latam_ampliado.csv` (delimitador **ponto e vírgula**, origem **65001: UTF-8**).
+2. Criar as colunas `temp_normal`, `anomalia_temp` e `chuva_normal` (fórmulas em [docs/dicionario_dados.md](docs/dicionario_dados.md)).
+3. Usar sempre medidas relativas ao normal de cada cidade (anomalia em °C e chuva em % do normal).
 
 ## Como reproduzir
 
