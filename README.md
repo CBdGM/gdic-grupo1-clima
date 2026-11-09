@@ -66,18 +66,17 @@ CHANGELOG.md                  histórico de versões
 
 Requer **Power BI Desktop atualizado (Windows)**. O arquivo a abrir é **`powerbi/GDIC_Grupo1_Clima.pbip`**.
 
-1. **Baixar o repositório inteiro:** no VS Code, *Ctrl+Shift+P → Git: Clone* e colar o endereço do repositório; ou, no GitHub, *Code → Download ZIP* e extrair a pasta.
+1. **Clonar o repositório em `C:\gdic-grupo1-clima`** (todos no mesmo caminho): no VS Code, *Ctrl+Shift+P → Git: Clone*, colar o endereço do repositório e escolher a pasta `C:\`. O projeto lê o CSV em `C:\gdic-grupo1-clima\data\clima_latam_ampliado.csv`; com o mesmo caminho em todos os computadores, ninguém precisa reapontar a fonte.
 2. **Abrir:** dois cliques em `powerbi/GDIC_Grupo1_Clima.pbip` (ou *Arquivo → Abrir* no Power BI). As pastas `.Report` e `.SemanticModel` precisam estar ao lado do `.pbip`.
-3. **Apontar para o CSV no seu computador:** *Transformar dados* → consulta **clima_cidades** → engrenagem da etapa **Fonte** → *Procurar…* → `data/clima_latam_ampliado.csv` do seu clone → *OK* → *Fechar e Aplicar*.
-4. **Carregar os dados:** o cache não é versionado, então na primeira abertura os gráficos podem vir vazios. Clique em *Página Inicial → Atualizar*.
+3. **Carregar os dados:** o cache não é versionado, então na primeira abertura os gráficos podem vir vazios. Clique em *Página Inicial → Atualizar*.
 
 | Problema | Solução |
 |---|---|
 | Windows não abre `.pbip` | Atualizar o Power BI Desktop ou usar *Arquivo → Abrir* |
-| "Não foi possível encontrar o arquivo" | Passo 3 |
-| Gráficos vazios | Passo 4 |
+| "Não foi possível encontrar o arquivo" | O clone não está em `C:\gdic-grupo1-clima`. Clone de novo nesse caminho (não altere a fonte no projeto) |
+| Gráficos vazios | Passo 3 |
 
-As colunas calculadas (`temp_normal`, `anomalia_temp`, `chuva_normal`, `Local`) e as medidas já estão no projeto. Use sempre medidas relativas ao normal de cada cidade (anomalia em °C e chuva em % do normal). Onde ficam as fórmulas: [powerbi/README.md](powerbi/README.md).
+O projeto já tem as 7 páginas (vazias, uma por integrante), as colunas calculadas e as medidas comuns. **Antes de trabalhar, leia [COLABORACAO.md](COLABORACAO.md)**. Onde ficam as fórmulas: [powerbi/README.md](powerbi/README.md).
 
 ## Como reproduzir
 

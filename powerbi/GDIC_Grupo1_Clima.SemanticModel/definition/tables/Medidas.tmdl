@@ -36,6 +36,98 @@ table Medidas
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
+	measure 'Nº Cidades' = DISTINCTCOUNT ( clima_cidades[cidade] )
+		formatString: 0
+		displayFolder: Base
+		lineageTag: f459bffd-7f0a-480d-bf89-07bb4e7bdbce
+
+	measure 'Nº Países' = DISTINCTCOUNT ( clima_cidades[pais] )
+		formatString: 0
+		displayFolder: Base
+		lineageTag: 899d7736-6f94-4af2-9e17-8caf9297b729
+
+	measure 'Nº Registros' = COUNTROWS ( clima_cidades )
+		formatString: #,0
+		displayFolder: Base
+		lineageTag: 9d008e96-5e79-4866-b243-89caba9e00c9
+
+	measure 'Período' = MIN ( clima_cidades[ano] ) & " – " & MAX ( clima_cidades[ano] )
+		displayFolder: Base
+		lineageTag: 73ba029d-ab50-4841-b615-4d6d5bd532c5
+
+	measure '% Meses El Niño' =
+			DIVIDE (
+			    CALCULATE ( DISTINCTCOUNT ( clima_cidades[data] ), clima_cidades[fase] = "El Niño" ),
+			    DISTINCTCOUNT ( clima_cidades[data] )
+			)
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: El Niño e La Niña
+		lineageTag: 4dd1c14f-0729-4374-8fa3-42111a5be568
+
+	measure '% Meses La Niña' =
+			DIVIDE (
+			    CALCULATE ( DISTINCTCOUNT ( clima_cidades[data] ), clima_cidades[fase] = "La Niña" ),
+			    DISTINCTCOUNT ( clima_cidades[data] )
+			)
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: El Niño e La Niña
+		lineageTag: 7d2d0ff8-6178-4a39-93f3-6b090ff8aeb8
+
+	measure 'Temp Normal (°C)' = AVERAGE ( clima_cidades[temp_normal] )
+		formatString: 0.0
+		displayFolder: Temperatura
+		lineageTag: 8a4560bd-07a8-4d3a-9200-1ed8f52c46d0
+
+	measure 'Anomalia Máx (°C)' = AVERAGE ( clima_cidades[anomalia_max] )
+		formatString: +0.00;-0.00;0.00
+		displayFolder: Temperatura
+		lineageTag: 50b1e282-351d-417f-9f35-343a4404ef0d
+
+	measure 'Anomalia Mín (°C)' = AVERAGE ( clima_cidades[anomalia_min] )
+		formatString: +0.00;-0.00;0.00
+		displayFolder: Temperatura
+		lineageTag: 7b9778a8-056b-47da-88a6-0158ad9033bc
+
+	measure 'Amplitude Térmica (°C)' = AVERAGE ( clima_cidades[amplitude_termica] )
+		formatString: 0.0
+		displayFolder: Temperatura
+		lineageTag: cfb01dc7-1305-40c8-8c80-fd379c6cdce2
+
+	measure 'Máxima Absoluta (°C)' = MAX ( clima_cidades[temp_max_absoluta] )
+		formatString: 0.0
+		displayFolder: Temperatura
+		lineageTag: 1a37ad4c-ab0f-4bb6-9fff-c4834ad41d2c
+
+	measure 'Chuva Normal (mm)' = AVERAGE ( clima_cidades[chuva_normal] )
+		formatString: #,0
+		displayFolder: Chuva
+		lineageTag: 5616af82-850b-4380-bfc3-6d3d2cb5d031
+
+	measure 'Chuva Anual Média (mm)' =
+			AVERAGEX (
+			    SUMMARIZE ( clima_cidades, clima_cidades[cidade], clima_cidades[ano] ),
+			    CALCULATE ( SUM ( clima_cidades[precip_total_mm] ) )
+			)
+		formatString: #,0
+		displayFolder: Chuva
+		lineageTag: 111b435b-6c34-4ade-adae-fe60048be794
+
+	measure 'Tendência (°C por década)' =
+			VAR t = ADDCOLUMNS ( VALUES ( clima_cidades[ano] ), "@anom", [Anomalia Temp (°C)] )
+			VAR reta = LINESTX ( t, [@anom], clima_cidades[ano] )
+			RETURN MAXX ( reta, [Slope1] ) * 10
+		formatString: +0.00;-0.00;0.00
+		displayFolder: Tendência e previsão
+		lineageTag: 9da26154-6eb9-4378-bc37-36e1edd9f6a2
+
+	measure 'Anomalia Projetada 2030 (°C)' =
+			VAR t = ADDCOLUMNS ( VALUES ( clima_cidades[ano] ), "@anom", [Anomalia Temp (°C)] )
+			VAR reta = LINESTX ( t, [@anom], clima_cidades[ano] )
+			RETURN MAXX ( reta, [Intercept] + [Slope1] * 2030 )
+		formatString: +0.00;-0.00;0.00
+		displayFolder: Tendência e previsão
+		lineageTag: 917c5c78-5c71-494e-8c65-704b494038eb
+
 	column x
 		isHidden
 		formatString: 0

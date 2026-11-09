@@ -46,10 +46,10 @@ table clima_cidades
 		dataType: int64
 		formatString: 0
 		lineageTag: a2c773d7-8b57-476e-ae07-ec5f4bbd2121
-		summarizeBy: sum
+		summarizeBy: none
 		sourceColumn: mes
 
-		annotation SummarizationSetBy = Automatic
+		annotation SummarizationSetBy = User
 
 	column temp_media
 		dataType: double
@@ -122,6 +122,7 @@ table clima_cidades
 
 	column fase
 		dataType: string
+		sortByColumn: ordem_fase
 		lineageTag: 9775ef9d-d564-4604-8ffa-cf405fe66962
 		summarizeBy: none
 		sourceColumn: fase
@@ -130,6 +131,7 @@ table clima_cidades
 
 	column intensidade
 		dataType: string
+		sortByColumn: ordem_intensidade
 		lineageTag: 3c8c6ab4-01a4-4d90-99ac-024f1da8ccbe
 		summarizeBy: none
 		sourceColumn: intensidade
@@ -195,15 +197,109 @@ table clima_cidades
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
+	column decada = INT ( clima_cidades[ano] / 10 ) * 10
+		formatString: 0
+		lineageTag: b91a7b01-d956-4f09-b20e-30fe80e20a77
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+	column nome_mes = FORMAT ( clima_cidades[data], "MMM" )
+		lineageTag: 1dc6c472-80c4-4e17-84d0-f358dcd28729
+		summarizeBy: none
+		sortByColumn: mes
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordem_fase
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 35eeb1e1-6958-49fd-98e2-dc75bc21bee1
+		summarizeBy: none
+		sourceColumn: ordem_fase
+
+		annotation SummarizationSetBy = User
+
+	column ordem_intensidade
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: eb5527c6-c16a-4006-8ed0-3c4b263aa24a
+		summarizeBy: none
+		sourceColumn: ordem_intensidade
+
+		annotation SummarizationSetBy = User
+
+	column temp_max_normal =
+			VAR c = clima_cidades[cidade]
+			VAR m = clima_cidades[mes]
+			RETURN
+			    CALCULATE (
+			        AVERAGE ( clima_cidades[temp_max_media] ),
+			        FILTER ( ALL ( clima_cidades ),
+			            clima_cidades[cidade] = c && clima_cidades[mes] = m
+			                && clima_cidades[ano] >= 1991 && clima_cidades[ano] <= 2020 )
+			    )
+		lineageTag: 2761d36e-51fc-46ce-85df-68d05be501c9
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column temp_min_normal =
+			VAR c = clima_cidades[cidade]
+			VAR m = clima_cidades[mes]
+			RETURN
+			    CALCULATE (
+			        AVERAGE ( clima_cidades[temp_min_media] ),
+			        FILTER ( ALL ( clima_cidades ),
+			            clima_cidades[cidade] = c && clima_cidades[mes] = m
+			                && clima_cidades[ano] >= 1991 && clima_cidades[ano] <= 2020 )
+			    )
+		lineageTag: fe9a813d-e3fa-40fd-b404-344d9cf868e4
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column anomalia_max = clima_cidades[temp_max_media] - clima_cidades[temp_max_normal]
+		lineageTag: 7926a234-7489-46a9-906b-7fd771708559
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column anomalia_min = clima_cidades[temp_min_media] - clima_cidades[temp_min_normal]
+		lineageTag: ad4b627c-f641-4a10-9959-83048f2762c0
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column amplitude_termica = clima_cidades[temp_max_media] - clima_cidades[temp_min_media]
+		lineageTag: 82d07855-9cb6-4528-bc8e-c240d826998a
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
 	partition clima_cidades = m
 		mode: import
 		source =
 				let
-				    Fonte = Csv.Document(File.Contents("C:\Users\GUZM4N\Documents\gdic-grupo1-powerbi-clima\data\clima_latam_ampliado.csv"),[Delimiter=";", Columns=15, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    Fonte = Csv.Document(File.Contents("C:\gdic-grupo1-clima\data\clima_latam_ampliado.csv"),[Delimiter=";", Columns=15, Encoding=65001, QuoteStyle=QuoteStyle.None]),
 				    #"Cabeçalhos Promovidos" = Table.PromoteHeaders(Fonte, [PromoteAllScalars=true]),
-				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Cabeçalhos Promovidos",{{"cidade", type text}, {"pais", type text}, {"data", type date}, {"ano", Int64.Type}, {"mes", Int64.Type}, {"temp_media", type number}, {"temp_max_media", type number}, {"temp_min_media", type number}, {"temp_max_absoluta", type number}, {"precip_total_mm", type number}, {"dias_chuva", Int64.Type}, {"oni", type number}, {"fase", type text}, {"intensidade", type text}, {"evento_enso", type text}})
+				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Cabeçalhos Promovidos",{{"cidade", type text}, {"pais", type text}, {"data", type date}, {"ano", Int64.Type}, {"mes", Int64.Type}, {"temp_media", type number}, {"temp_max_media", type number}, {"temp_min_media", type number}, {"temp_max_absoluta", type number}, {"precip_total_mm", type number}, {"dias_chuva", Int64.Type}, {"oni", type number}, {"fase", type text}, {"intensidade", type text}, {"evento_enso", type text}}),
+				    #"Ordem Fase" = Table.AddColumn(#"Tipo Alterado", "ordem_fase", each if [fase] = "La Niña" then 1 else if [fase] = "Neutro" then 2 else 3, Int64.Type),
+				    #"Ordem Intensidade" = Table.AddColumn(#"Ordem Fase", "ordem_intensidade", each if [intensidade] = "Fraco" then 1 else if [intensidade] = "Moderado" then 2 else if [intensidade] = "Forte" then 3 else if [intensidade] = "Muito forte" then 4 else 0, Int64.Type)
 				in
-				    #"Tipo Alterado"
+				    #"Ordem Intensidade"
 
 	annotation PBI_NavigationStepName = Navegação
 
