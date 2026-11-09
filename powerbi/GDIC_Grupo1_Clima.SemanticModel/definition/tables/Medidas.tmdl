@@ -1,0 +1,54 @@
+table Medidas
+	lineageTag: 93d67e74-7ae2-4235-9c71-53ea386b8ed1
+
+	measure 'Temp Média (°C)' = AVERAGE ( clima_cidades[temp_media] )
+		lineageTag: 0f05ec38-71ae-45ae-9ecd-bfe47243a223
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Chuva Mensal Média (mm)' = AVERAGE ( clima_cidades[precip_total_mm] )
+		lineageTag: 70058eac-aac1-4262-8cc1-8133246eafff
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'ONI Médio' = AVERAGE ( clima_cidades[oni] )
+		lineageTag: e668895c-3fad-4132-88dd-2b75bb9d8be0
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Chuva vs Neutro (%)' =
+			
+			DIVIDE (
+			    [Chuva Mensal Média (mm)],
+			    CALCULATE ( [Chuva Mensal Média (mm)], clima_cidades[fase] = "Neutro" )
+			) - 1
+		formatString: 0%;-0%;0%
+		lineageTag: 0176d4b7-0660-4822-a827-797150e41e47
+
+	measure 'Chuva vs Normal (%)' =
+			
+			DIVIDE ( SUM ( clima_cidades[precip_total_mm] ), SUM ( clima_cidades[chuva_normal] ) ) - 1
+		formatString: 0%;-0%;0%
+		lineageTag: 1bdc1384-f4dc-4609-aef5-c606f69f9065
+
+	measure 'Anomalia Temp (°C)' = AVERAGE ( clima_cidades[anomalia_temp] )
+		lineageTag: 0d43cf53-0429-4f80-8a68-ff5fa94b0e24
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column x
+		isHidden
+		formatString: 0
+		lineageTag: 94f4439f-8fd3-4585-aeb7-60a465ae9ae6
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [x]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Medidas = calculated
+		mode: import
+		source = ROW ( "x", BLANK () )
+
+	annotation PBI_Id = 6c729138e1dc4bc196ea927254b4568f
+

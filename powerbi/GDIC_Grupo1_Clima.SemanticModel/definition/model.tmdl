@@ -1,0 +1,22 @@
+model Model
+	culture: pt-BR
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: pt-BR
+	valueFilterBehavior: independent
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["clima_cidades"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table clima_cidades
+ref table DateTableTemplate_a03c5f2b-bbff-4e21-8ef2-9d6c97be8808
+ref table LocalDateTable_e0b88afa-456c-440c-b6cd-9f17b483c114
+ref table Medidas
+
+ref cultureInfo pt-BR
+

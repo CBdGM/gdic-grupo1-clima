@@ -11,8 +11,8 @@ Thumbs.db
 desktop.ini
 ~$*
 *.pbix.bak
-.pbi/localSettings.json
-.pbi/cache.abf
+**/.pbi/localSettings.json
+**/.pbi/cache.abf
 
 # Editores
 .vscode/

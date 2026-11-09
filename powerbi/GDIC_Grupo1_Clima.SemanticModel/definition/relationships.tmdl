@@ -1,0 +1,5 @@
+relationship 3b2c7428-a34f-4d33-9ffc-7fbf9c75d22c
+	joinOnDateBehavior: datePartOnly
+	fromColumn: clima_cidades.data
+	toColumn: LocalDateTable_e0b88afa-456c-440c-b6cd-9f17b483c114.Date
+

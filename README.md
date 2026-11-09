@@ -5,7 +5,7 @@ Dashboard em **Power BI** sobre o clima da América Latina: aquecimento por cida
 
 **Integrantes:** _(preencher)_
 **Apresentação:** 16 ou 19/11/2026
-**Status:** base de dados validada (v1.1.0) · dashboard em construção
+**Status:** base de dados validada (v1.1.0) · dashboard em construção (`powerbi/GDIC_Grupo1_Clima.pbip`)
 
 ## Perguntas que o dashboard responde
 1. As cidades da América Latina estão esquentando? Quanto, por década?
@@ -55,15 +55,29 @@ scripts/
 docs/
   dicionario_dados.md         o que é cada coluna
   validacao.md                comparação com estações oficiais e eventos reais
-powerbi/                      arquivos do dashboard
+powerbi/
+  GDIC_Grupo1_Clima.pbip      dashboard (Power BI Project) ← abrir este
+  GDIC_Grupo1_Clima.Report/   páginas e visuais
+  GDIC_Grupo1_Clima.SemanticModel/  tabelas, colunas calculadas e medidas (.tmdl)
 CHANGELOG.md                  histórico de versões
 ```
 
-## Como usar no Power BI
+## Como abrir o dashboard no Power BI
 
-1. **Obter dados → Texto/CSV** → `data/clima_latam_ampliado.csv` (delimitador **ponto e vírgula**, origem **65001: UTF-8**).
-2. Criar as colunas `temp_normal`, `anomalia_temp` e `chuva_normal` (fórmulas em [docs/dicionario_dados.md](docs/dicionario_dados.md)).
-3. Usar sempre medidas relativas ao normal de cada cidade (anomalia em °C e chuva em % do normal).
+Requer **Power BI Desktop atualizado (Windows)**. O arquivo a abrir é **`powerbi/GDIC_Grupo1_Clima.pbip`**.
+
+1. **Baixar o repositório inteiro:** no VS Code, *Ctrl+Shift+P → Git: Clone* e colar o endereço do repositório; ou, no GitHub, *Code → Download ZIP* e extrair a pasta.
+2. **Abrir:** dois cliques em `powerbi/GDIC_Grupo1_Clima.pbip` (ou *Arquivo → Abrir* no Power BI). As pastas `.Report` e `.SemanticModel` precisam estar ao lado do `.pbip`.
+3. **Apontar para o CSV no seu computador:** *Transformar dados* → consulta **clima_cidades** → engrenagem da etapa **Fonte** → *Procurar…* → `data/clima_latam_ampliado.csv` do seu clone → *OK* → *Fechar e Aplicar*.
+4. **Carregar os dados:** o cache não é versionado, então na primeira abertura os gráficos podem vir vazios. Clique em *Página Inicial → Atualizar*.
+
+| Problema | Solução |
+|---|---|
+| Windows não abre `.pbip` | Atualizar o Power BI Desktop ou usar *Arquivo → Abrir* |
+| "Não foi possível encontrar o arquivo" | Passo 3 |
+| Gráficos vazios | Passo 4 |
+
+As colunas calculadas (`temp_normal`, `anomalia_temp`, `chuva_normal`, `Local`) e as medidas já estão no projeto. Use sempre medidas relativas ao normal de cada cidade (anomalia em °C e chuva em % do normal). Onde ficam as fórmulas: [powerbi/README.md](powerbi/README.md).
 
 ## Como reproduzir
 

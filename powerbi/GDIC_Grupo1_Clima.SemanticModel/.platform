@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "GDIC_Grupo1_Clima"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "55588450-f027-43bf-8b71-b53dcf712964"
+  }
+}

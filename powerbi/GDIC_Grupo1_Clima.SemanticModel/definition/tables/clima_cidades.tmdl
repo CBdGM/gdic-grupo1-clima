@@ -1,0 +1,211 @@
+table clima_cidades
+	lineageTag: ad609264-2eaf-4b81-a5f8-1ee2c8682c1a
+
+	column cidade
+		dataType: string
+		lineageTag: c7cbf808-e24b-4309-bbe5-b5cf58bfe90d
+		summarizeBy: none
+		sourceColumn: cidade
+
+		annotation SummarizationSetBy = Automatic
+
+	column pais
+		dataType: string
+		lineageTag: b86e64a8-be1d-433a-ae80-598ba3bf297d
+		summarizeBy: none
+		sourceColumn: pais
+
+		annotation SummarizationSetBy = Automatic
+
+	column data
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 5441d97a-8308-4b05-b59f-1206b15523f5
+		summarizeBy: none
+		sourceColumn: data
+
+		variation Variação
+			isDefault
+			relationship: 3b2c7428-a34f-4d33-9ffc-7fbf9c75d22c
+			defaultHierarchy: LocalDateTable_e0b88afa-456c-440c-b6cd-9f17b483c114.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ano
+		dataType: int64
+		formatString: 0
+		lineageTag: 4d2bb0e6-1715-4439-85b9-6132b05b8201
+		summarizeBy: none
+		sourceColumn: ano
+
+		annotation SummarizationSetBy = User
+
+	column mes
+		dataType: int64
+		formatString: 0
+		lineageTag: a2c773d7-8b57-476e-ae07-ec5f4bbd2121
+		summarizeBy: sum
+		sourceColumn: mes
+
+		annotation SummarizationSetBy = Automatic
+
+	column temp_media
+		dataType: double
+		lineageTag: ce67b46e-75a7-4839-abd7-58e590573b71
+		summarizeBy: sum
+		sourceColumn: temp_media
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column temp_max_media
+		dataType: double
+		lineageTag: 44facc6f-68ef-4002-aff9-cd4082798331
+		summarizeBy: sum
+		sourceColumn: temp_max_media
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column temp_min_media
+		dataType: double
+		lineageTag: faa26cb9-e216-478d-b83a-cad32bb6a446
+		summarizeBy: sum
+		sourceColumn: temp_min_media
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column temp_max_absoluta
+		dataType: double
+		lineageTag: 556ba3d7-4d77-43c2-8966-ceb1398419db
+		summarizeBy: sum
+		sourceColumn: temp_max_absoluta
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column precip_total_mm
+		dataType: double
+		lineageTag: bda8316d-e38d-4eb1-834c-9a26fb397914
+		summarizeBy: sum
+		sourceColumn: precip_total_mm
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column dias_chuva
+		dataType: int64
+		formatString: 0
+		lineageTag: df6258dc-0a9c-45b7-b5e3-8fe596340cde
+		summarizeBy: sum
+		sourceColumn: dias_chuva
+
+		annotation SummarizationSetBy = Automatic
+
+	column oni
+		dataType: double
+		lineageTag: 3e5f93f0-a530-447c-8477-7386417e3ae1
+		summarizeBy: sum
+		sourceColumn: oni
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column fase
+		dataType: string
+		lineageTag: 9775ef9d-d564-4604-8ffa-cf405fe66962
+		summarizeBy: none
+		sourceColumn: fase
+
+		annotation SummarizationSetBy = Automatic
+
+	column intensidade
+		dataType: string
+		lineageTag: 3c8c6ab4-01a4-4d90-99ac-024f1da8ccbe
+		summarizeBy: none
+		sourceColumn: intensidade
+
+		annotation SummarizationSetBy = Automatic
+
+	column evento_enso
+		dataType: string
+		lineageTag: 2ab3ba3a-45c7-4c2f-85a3-07d06f4397d6
+		summarizeBy: none
+		sourceColumn: evento_enso
+
+		annotation SummarizationSetBy = Automatic
+
+	column Local = clima_cidades[cidade] & ", " & clima_cidades[pais]
+		lineageTag: e20f593e-470b-4fcf-8d16-4f1026e70526
+		dataCategory: Place
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column temp_normal =
+			
+			VAR c = clima_cidades[cidade]
+			VAR m = clima_cidades[mes]
+			RETURN
+			    CALCULATE (
+			        AVERAGE ( clima_cidades[temp_media] ),
+			        FILTER ( ALL ( clima_cidades ),
+			            clima_cidades[cidade] = c && clima_cidades[mes] = m
+			                && clima_cidades[ano] >= 1991 && clima_cidades[ano] <= 2020 )
+			    )
+		lineageTag: ba1ad9f9-3aaf-4ab8-ad5a-346f38bae914
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column anomalia_temp = clima_cidades[temp_media] - clima_cidades[temp_normal]
+		lineageTag: a5bdf464-af6e-4560-a2b5-7cbb0695f56b
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column chuva_normal =
+			
+			VAR c = clima_cidades[cidade]
+			VAR m = clima_cidades[mes]
+			RETURN
+			    CALCULATE (
+			        AVERAGE ( clima_cidades[precip_total_mm] ),
+			        FILTER ( ALL ( clima_cidades ),
+			            clima_cidades[cidade] = c && clima_cidades[mes] = m
+			                && clima_cidades[ano] >= 1991 && clima_cidades[ano] <= 2020 )
+			    )
+		lineageTag: 94bb8080-f7bf-4bca-b140-bfd1b93e8624
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition clima_cidades = m
+		mode: import
+		source =
+				let
+				    Fonte = Csv.Document(File.Contents("C:\Users\GUZM4N\Documents\gdic-grupo1-powerbi-clima\data\clima_latam_ampliado.csv"),[Delimiter=";", Columns=15, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Cabeçalhos Promovidos" = Table.PromoteHeaders(Fonte, [PromoteAllScalars=true]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Cabeçalhos Promovidos",{{"cidade", type text}, {"pais", type text}, {"data", type date}, {"ano", Int64.Type}, {"mes", Int64.Type}, {"temp_media", type number}, {"temp_max_media", type number}, {"temp_min_media", type number}, {"temp_max_absoluta", type number}, {"precip_total_mm", type number}, {"dias_chuva", Int64.Type}, {"oni", type number}, {"fase", type text}, {"intensidade", type text}, {"evento_enso", type text}})
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+
