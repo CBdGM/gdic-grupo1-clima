@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.1.0/schema.json",
   "name": "6e5b3837240da7444090",
   "position": {
-    "x": 100.73206442166911,
-    "y": 0,
-    "z": 6002,
-    "height": 110.10248901903367,
-    "width": 1004.9780380673499,
-    "tabOrder": 6002
+    "x": 80,
+    "y": 20,
+    "z": 8000,
+    "height": 120,
+    "width": 330,
+    "tabOrder": 8000
   },
   "visual": {
     "visualType": "card",
@@ -37,6 +37,36 @@
           ]
         }
       }
+    },
+    "objects": {
+      "categoryLabels": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Cidade'"
+                }
+              }
+            }
+          }
+        }
+      ]
     },
     "drillFilterOtherVisuals": true
   }
