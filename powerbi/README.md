@@ -12,7 +12,7 @@ Dashboard salvo como **Power BI Project (.pbip)**: em vez de um arquivo binário
 - **Colunas calculadas**: `GDIC_Grupo1_Clima.SemanticModel/definition/tables/clima_cidades.tmdl`
   - normal e anomalia: `temp_normal`, `anomalia_temp`, `chuva_normal`, `temp_max_normal`, `temp_min_normal`, `anomalia_max`, `anomalia_min`
   - eventos extremos: `chuva_pct` (chuva vs normal, só meses com normal > 30 mm) e `tipo_extremo` (Chuva extrema ≥ +100% / Seca extrema ≤ −70% / Calor extremo ≥ +1 °C / Normal, nessa prioridade)
-  - apoio: `Local` (mapa), `decada`, `nome_mes` (ordenado por `mes`), `amplitude_termica`, `ordem_fase` e `ordem_intensidade` (ocultas, ordenam `fase` e `intensidade`)
+  - apoio: `Local` (mapa), `decada`, `nome_mes` (ordenado por `mes`), `amplitude_termica`, `ordem_fase` e `ordem_intensidade` (ocultas, ordenam `fase` e `intensidade`) e `região`
 - **Medidas**: `GDIC_Grupo1_Clima.SemanticModel/definition/tables/Medidas.tmdl`, organizadas em pastas:
   - **Base:** Nº Cidades, Nº Países, Nº Registros, Período
   - **Temperatura:** Temp Média, Temp Normal, Anomalia Temp, Anomalia Máx, Anomalia Mín, Amplitude Térmica, Máxima Absoluta
