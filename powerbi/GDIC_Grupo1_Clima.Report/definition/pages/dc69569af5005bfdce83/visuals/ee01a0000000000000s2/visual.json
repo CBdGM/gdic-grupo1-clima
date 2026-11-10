@@ -1,0 +1,55 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "ee01a0000000000000s2",
+  "position": {
+    "x": 1078,
+    "y": 8,
+    "z": 2,
+    "height": 56,
+    "width": 186,
+    "tabOrder": 2
+  },
+  "visual": {
+    "visualType": "slicer",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "clima_cidades"
+                    }
+                  },
+                  "Property": "cidade"
+                }
+              },
+              "queryRef": "clima_cidades.cidade",
+              "nativeQueryRef": "cidade",
+              "displayName": "Cidade",
+              "active": true
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "data": [
+        {
+          "properties": {
+            "mode": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Dropdown'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

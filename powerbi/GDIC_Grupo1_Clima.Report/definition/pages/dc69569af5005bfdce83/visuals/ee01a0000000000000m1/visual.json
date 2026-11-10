@@ -1,0 +1,303 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "ee01a0000000000000m1",
+  "position": {
+    "x": 16,
+    "y": 180,
+    "z": 7,
+    "height": 300,
+    "width": 620,
+    "tabOrder": 7
+  },
+  "visual": {
+    "visualType": "map",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "clima_cidades"
+                    }
+                  },
+                  "Property": "Local"
+                }
+              },
+              "queryRef": "clima_cidades.Local",
+              "nativeQueryRef": "Local",
+              "active": true
+            }
+          ]
+        },
+        "Series": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "clima_cidades"
+                    }
+                  },
+                  "Property": "tipo_extremo"
+                }
+              },
+              "queryRef": "clima_cidades.tipo_extremo",
+              "nativeQueryRef": "tipo_extremo",
+              "active": true
+            }
+          ]
+        },
+        "Size": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "Recorde Extremo"
+                }
+              },
+              "queryRef": "Medidas.Recorde Extremo",
+              "nativeQueryRef": "Recorde Extremo"
+            }
+          ]
+        },
+        "Tooltips": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "Recorde (detalhe)"
+                }
+              },
+              "queryRef": "Medidas.Recorde (detalhe)",
+              "nativeQueryRef": "Recorde (detalhe)"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "dataPoint": [
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#D64550'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "clima_cidades"
+                          }
+                        },
+                        "Property": "tipo_extremo"
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "'Calor extremo'"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#EDA100'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "clima_cidades"
+                          }
+                        },
+                        "Property": "tipo_extremo"
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "'Seca extrema'"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#2A78D6'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "clima_cidades"
+                          }
+                        },
+                        "Property": "tipo_extremo"
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "'Chuva extrema'"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Recorde de cada tipo de extremo (top 1)'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "73dcde75e2ca3c5d0039",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "clima_cidades"
+              }
+            },
+            "Property": "Local"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "beeae24230abbe01d8a2",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "clima_cidades"
+              }
+            },
+            "Property": "tipo_extremo"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "b480234307ab93340340",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Medidas"
+              }
+            },
+            "Property": "Recorde Extremo"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "a382266a56d0ed8346c3",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Medidas"
+              }
+            },
+            "Property": "Recorde (detalhe)"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}
