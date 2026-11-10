@@ -289,6 +289,27 @@ table clima_cidades
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
+	column regiao =
+			SWITCH (
+			    TRUE (),
+			    clima_cidades[cidade] IN { "Cidade do México", "Monterrey" }, "México",
+			    clima_cidades[cidade] IN { "Cidade da Guatemala", "San Salvador", "Tegucigalpa", "Manágua", "San José", "Cidade do Panamá", "Havana", "Santo Domingo", "Porto Príncipe" }, "América Central e Caribe",
+			    clima_cidades[cidade] IN { "Bogotá", "Medellín", "Cartagena", "Caracas" }, "Norte da América do Sul",
+			    clima_cidades[cidade] IN { "Manaus", "Belém" }, "Amazônia",
+			    clima_cidades[cidade] IN { "Fortaleza", "Recife", "Salvador", "Petrolina" }, "Nordeste do Brasil",
+			    clima_cidades[cidade] IN { "Brasília", "Cuiabá", "São Paulo", "Rio de Janeiro" }, "Centro-Sudeste do Brasil",
+			    clima_cidades[cidade] IN { "Guayaquil", "Piura", "Lima" }, "Costa do Pacífico",
+			    clima_cidades[cidade] IN { "Quito", "La Paz" }, "Andes tropicais",
+			    clima_cidades[cidade] IN { "Porto Alegre", "Curitiba", "Asunción", "Buenos Aires", "Montevidéu" }, "Sul do Brasil e Bacia do Prata",
+			    clima_cidades[cidade] IN { "Santiago", "Antofagasta", "Mendoza", "Ushuaia" }, "Chile e Argentina andina",
+			    "Sem região"
+			)
+		lineageTag: 672fa69f-f94f-4a33-a5a7-961e8be0f6ed
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+
 	partition clima_cidades = m
 		mode: import
 		source =
