@@ -11,12 +11,14 @@ Dashboard salvo como **Power BI Project (.pbip)**: em vez de um arquivo binário
 ## Onde estão as fórmulas
 - **Colunas calculadas**: `GDIC_Grupo1_Clima.SemanticModel/definition/tables/clima_cidades.tmdl`
   - normal e anomalia: `temp_normal`, `anomalia_temp`, `chuva_normal`, `temp_max_normal`, `temp_min_normal`, `anomalia_max`, `anomalia_min`
+  - eventos extremos: `chuva_pct` (chuva vs normal, só meses com normal > 30 mm) e `tipo_extremo` (Chuva extrema ≥ +100% / Seca extrema ≤ −70% / Calor extremo ≥ +1 °C / Normal, nessa prioridade)
   - apoio: `Local` (mapa), `decada`, `nome_mes` (ordenado por `mes`), `amplitude_termica`, `ordem_fase` e `ordem_intensidade` (ocultas, ordenam `fase` e `intensidade`)
 - **Medidas**: `GDIC_Grupo1_Clima.SemanticModel/definition/tables/Medidas.tmdl`, organizadas em pastas:
   - **Base:** Nº Cidades, Nº Países, Nº Registros, Período
   - **Temperatura:** Temp Média, Temp Normal, Anomalia Temp, Anomalia Máx, Anomalia Mín, Amplitude Térmica, Máxima Absoluta
   - **Chuva:** Chuva Mensal Média, Chuva Anual Média, Chuva Normal, Chuva vs Normal (%)
   - **El Niño e La Niña:** ONI Médio, % Meses El Niño, % Meses La Niña
+  - **Eventos extremos:** % Meses Calor Extremo, % Meses Seca Extrema, % Meses Chuva Extrema, Recorde Extremo (1 só na cidade recordista de cada tipo, usada no mapa), Recorde (detalhe) (mês e valor, para dica de ferramenta)
   - **Tendência e previsão:** Tendência (°C por década), Anomalia Projetada 2030 (regressão linear com `LINESTX`)
 - **Páginas**: `GDIC_Grupo1_Clima.Report/definition/pages/` (uma pasta por página; a ordem fica em `pages.json`)
 

@@ -122,19 +122,19 @@ table clima_cidades
 
 	column fase
 		dataType: string
-		sortByColumn: ordem_fase
 		lineageTag: 9775ef9d-d564-4604-8ffa-cf405fe66962
 		summarizeBy: none
 		sourceColumn: fase
+		sortByColumn: ordem_fase
 
 		annotation SummarizationSetBy = Automatic
 
 	column intensidade
 		dataType: string
-		sortByColumn: ordem_intensidade
 		lineageTag: 3c8c6ab4-01a4-4d90-99ac-024f1da8ccbe
 		summarizeBy: none
 		sourceColumn: intensidade
+		sortByColumn: ordem_intensidade
 
 		annotation SummarizationSetBy = Automatic
 
@@ -288,6 +288,26 @@ table clima_cidades
 		annotation SummarizationSetBy = User
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column chuva_pct = IF ( clima_cidades[chuva_normal] > 30, DIVIDE ( clima_cidades[precip_total_mm], clima_cidades[chuva_normal] ) - 1 )
+		formatString: 0%;-0%;0%
+		lineageTag: 4b6f2a1e-8c3d-4e5f-9a7b-1c2d3e4f5a61
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+	column tipo_extremo =
+			SWITCH (
+			    TRUE (),
+			    NOT ISBLANK ( clima_cidades[chuva_pct] ) && clima_cidades[chuva_pct] >= 1, "Chuva extrema",
+			    NOT ISBLANK ( clima_cidades[chuva_pct] ) && clima_cidades[chuva_pct] <= -0.7, "Seca extrema",
+			    clima_cidades[anomalia_temp] >= 1, "Calor extremo",
+			    "Normal"
+			)
+		lineageTag: 7e2c9d4a-1b3f-4a6e-8d5c-2f3a4b5c6d72
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
 
 	partition clima_cidades = m
 		mode: import

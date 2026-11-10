@@ -51,7 +51,7 @@ table Medidas
 		displayFolder: Base
 		lineageTag: 9d008e96-5e79-4866-b243-89caba9e00c9
 
-	measure 'Período' = MIN ( clima_cidades[ano] ) & " – " & MAX ( clima_cidades[ano] )
+	measure Período = MIN ( clima_cidades[ano] ) & " – " & MAX ( clima_cidades[ano] )
 		displayFolder: Base
 		lineageTag: 73ba029d-ab50-4841-b615-4d6d5bd532c5
 
@@ -127,6 +127,84 @@ table Medidas
 		formatString: +0.00;-0.00;0.00
 		displayFolder: Tendência e previsão
 		lineageTag: 917c5c78-5c71-494e-8c65-704b494038eb
+
+	measure '% Meses Calor Extremo' =
+			DIVIDE (
+			    CALCULATE ( COUNTROWS ( clima_cidades ), clima_cidades[anomalia_temp] >= 1 ),
+			    COUNTROWS ( clima_cidades )
+			)
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Eventos extremos
+		lineageTag: a1c3e5f7-2b4d-4f6a-8c1e-3d5f7a9b1c01
+
+	measure '% Meses Seca Extrema' =
+			DIVIDE (
+			    CALCULATE ( COUNTROWS ( clima_cidades ), NOT ISBLANK ( clima_cidades[chuva_pct] ), clima_cidades[chuva_pct] <= -0.7 ),
+			    CALCULATE ( COUNTROWS ( clima_cidades ), NOT ISBLANK ( clima_cidades[chuva_pct] ) )
+			)
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Eventos extremos
+		lineageTag: a1c3e5f7-2b4d-4f6a-8c1e-3d5f7a9b1c02
+
+	measure '% Meses Chuva Extrema' =
+			DIVIDE (
+			    CALCULATE ( COUNTROWS ( clima_cidades ), NOT ISBLANK ( clima_cidades[chuva_pct] ), clima_cidades[chuva_pct] >= 1 ),
+			    CALCULATE ( COUNTROWS ( clima_cidades ), NOT ISBLANK ( clima_cidades[chuva_pct] ) )
+			)
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Eventos extremos
+		lineageTag: a1c3e5f7-2b4d-4f6a-8c1e-3d5f7a9b1c03
+
+	measure 'Recorde Extremo' =
+			VAR tipo = SELECTEDVALUE ( clima_cidades[tipo_extremo] )
+			VAR pontos =
+			    SWITCH (
+			        tipo,
+			        "Chuva extrema", MAX ( clima_cidades[chuva_pct] ),
+			        "Seca extrema", - MIN ( clima_cidades[chuva_pct] ),
+			        "Calor extremo", MAX ( clima_cidades[anomalia_temp] )
+			    )
+			VAR melhor =
+			    MAXX (
+			        ALLSELECTED ( clima_cidades[Local] ),
+			        CALCULATE (
+			            SWITCH (
+			                tipo,
+			                "Chuva extrema", MAX ( clima_cidades[chuva_pct] ),
+			                "Seca extrema", - MIN ( clima_cidades[chuva_pct] ),
+			                "Calor extremo", MAX ( clima_cidades[anomalia_temp] )
+			            )
+			        )
+			    )
+			RETURN IF ( NOT ISBLANK ( pontos ) && pontos >= melhor, 1 )
+		formatString: 0
+		displayFolder: Eventos extremos
+		lineageTag: a1c3e5f7-2b4d-4f6a-8c1e-3d5f7a9b1c04
+
+	measure 'Recorde (detalhe)' =
+			VAR tipo = SELECTEDVALUE ( clima_cidades[tipo_extremo] )
+			VAR linha =
+			    TOPN (
+			        1,
+			        clima_cidades,
+			        SWITCH (
+			            tipo,
+			            "Chuva extrema", clima_cidades[chuva_pct],
+			            "Seca extrema", - clima_cidades[chuva_pct],
+			            clima_cidades[anomalia_temp]
+			        ), DESC
+			    )
+			VAR dt = MAXX ( linha, clima_cidades[data] )
+			VAR valor =
+			    SWITCH (
+			        tipo,
+			        "Chuva extrema", FORMAT ( MAXX ( linha, clima_cidades[chuva_pct] ), "+0%" ),
+			        "Seca extrema", FORMAT ( MAXX ( linha, clima_cidades[chuva_pct] ), "0%" ),
+			        FORMAT ( MAXX ( linha, clima_cidades[anomalia_temp] ), "+0.0" ) & " °C"
+			    )
+			RETURN IF ( NOT ISBLANK ( dt ), FORMAT ( dt, "mmm/yyyy" ) & " · " & valor )
+		displayFolder: Eventos extremos
+		lineageTag: a1c3e5f7-2b4d-4f6a-8c1e-3d5f7a9b1c05
 
 	column x
 		isHidden
