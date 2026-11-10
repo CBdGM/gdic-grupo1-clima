@@ -1,0 +1,72 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.1.0/schema.json",
+  "name": "6af1ccc2ed2917a4c442",
+  "position": {
+    "x": 604.39238653001462,
+    "y": 744.94875549048311,
+    "z": 6001,
+    "height": 255.34407027818449,
+    "width": 501.31771595900437,
+    "tabOrder": 6001
+  },
+  "visual": {
+    "visualType": "columnChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "clima_cidades"
+                    }
+                  },
+                  "Property": "fase"
+                }
+              },
+              "queryRef": "clima_cidades.fase",
+              "nativeQueryRef": "fase",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "Chuva vs Normal (%)"
+                }
+              },
+              "queryRef": "Medidas.Chuva vs Normal (%)",
+              "nativeQueryRef": "Chuva vs Normal (%)"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Chuva por fase ENSO'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}
