@@ -29,10 +29,87 @@ Formato: CSV com separador `;`, decimal `,`, codificação UTF-8 com BOM. Uma li
 - **Chuva e dias de chuva:** use valores relativos ao normal da própria cidade (ex.: % vs. média 1991–2020), não compare valores absolutos entre cidades.
 - **Fase por mês:** a maioria dos anos mistura fases. Para análises anuais, use o ONI médio.
 
-## Colunas calculadas no Power BI (não estão no CSV)
-| Coluna | Fórmula (resumo) |
-|---|---|
-| `temp_normal` | Média de `temp_media` da mesma cidade e mês em 1991–2020 |
-| `anomalia_temp` | `temp_media − temp_normal` |
-| `chuva_normal` | Média de `precip_total_mm` da mesma cidade e mês em 1991–2020 |
-| `Local` | `cidade & ", " & pais` (para o mapa) |
+## Colunas criadas no Power BI (não estão no CSV)
+
+Ficam na tabela `clima_cidades` (`powerbi/GDIC_Grupo1_Clima.SemanticModel/definition/tables/clima_cidades.tmdl`). São 13: 11 colunas calculadas em DAX e 2 criadas no Power Query.
+
+"Normal" é sempre a média **da mesma cidade e do mesmo mês** no período de referência **1991–2020**. "Anomalia" é o valor do mês menos o normal: positiva = acima do normal, negativa = abaixo.
+
+### Normais (referência 1991–2020)
+| Coluna | Unidade | Fórmula (resumo) | Para que serve |
+|---|---|---|---|
+| `temp_normal` | °C | Média de `temp_media` da mesma cidade e mês em 1991–2020 | Base da anomalia de temperatura |
+| `temp_max_normal` | °C | Média de `temp_max_media` da mesma cidade e mês em 1991–2020 | Base da anomalia das máximas |
+| `temp_min_normal` | °C | Média de `temp_min_media` da mesma cidade e mês em 1991–2020 | Base da anomalia das mínimas |
+| `chuva_normal` | mm | Média de `precip_total_mm` da mesma cidade e mês em 1991–2020 | Denominador de `Chuva vs Normal (%)` |
+
+### Anomalias e amplitude
+| Coluna | Unidade | Fórmula | Para que serve |
+|---|---|---|---|
+| `anomalia_temp` | °C | `temp_media − temp_normal` | Quanto o mês ficou mais quente ou mais frio que o normal |
+| `anomalia_max` | °C | `temp_max_media − temp_max_normal` | Desvio das máximas (página Calor extremo) |
+| `anomalia_min` | °C | `temp_min_media − temp_min_normal` | Desvio das mínimas (página Calor extremo) |
+| `amplitude_termica` | °C | `temp_max_media − temp_min_media` | Diferença média entre máxima e mínima do mês |
+
+Não existe coluna de anomalia de chuva: a comparação com o normal é feita pela medida `Chuva vs Normal (%)`.
+
+### Colunas de apoio
+| Coluna | Tipo | Fórmula | Para que serve |
+|---|---|---|---|
+| `Local` | texto (categoria *Local*) | `cidade & ", " & pais` | Localização no visual de mapa |
+| `decada` | inteiro | `INT(ano / 10) * 10` (ex.: 1980, 1990) | Agrupar por década |
+| `nome_mes` | texto | `FORMAT(data, "MMM")`, ordenada por `mes` | Nome curto do mês no eixo, em ordem de calendário |
+| `ordem_fase` | inteiro, **oculta** | Power Query: La Niña = 1, Neutro = 2, El Niño = 3 | Ordena a coluna `fase` |
+| `ordem_intensidade` | inteiro, **oculta** | Power Query: Fraco = 1, Moderado = 2, Forte = 3, Muito forte = 4, demais = 0 | Ordena a coluna `intensidade` |
+
+## Medidas (tabela `Medidas`)
+
+Ficam em `powerbi/GDIC_Grupo1_Clima.SemanticModel/definition/tables/Medidas.tmdl`. São 21. A coluna **Pasta** é a pasta de exibição no painel *Dados* do Power BI; "–" indica medida ainda sem pasta (aparece solta na raiz da tabela).
+
+### Base
+| Medida | Pasta | Fórmula (resumo) | O que mostra |
+|---|---|---|---|
+| `Nº Cidades` | Base | Contagem distinta de `cidade` | Cidades no filtro atual |
+| `Nº Países` | Base | Contagem distinta de `pais` | Países no filtro atual |
+| `Nº Registros` | Base | Contagem de linhas | Linhas (cidade × mês) no filtro atual |
+| `Período` | Base | `MIN(ano) & " – " & MAX(ano)` | Texto com o intervalo de anos, ex.: "1980 – 2025" |
+
+### Temperatura
+| Medida | Pasta | Fórmula (resumo) | O que mostra |
+|---|---|---|---|
+| `Temp Média (°C)` | – | Média de `temp_media` | Temperatura média |
+| `Temp Normal (°C)` | Temperatura | Média de `temp_normal` | Temperatura normal (1991–2020) |
+| `Anomalia Temp (°C)` | – | Média de `anomalia_temp` | Desvio médio da temperatura em relação ao normal |
+| `Anomalia Máx (°C)` | Temperatura | Média de `anomalia_max` | Desvio médio das máximas |
+| `Anomalia Mín (°C)` | Temperatura | Média de `anomalia_min` | Desvio médio das mínimas |
+| `Amplitude Térmica (°C)` | Temperatura | Média de `amplitude_termica` | Diferença média entre máxima e mínima |
+| `Máxima Absoluta (°C)` | Temperatura | Máximo de `temp_max_absoluta` | Maior temperatura registrada no filtro atual |
+
+### Chuva
+| Medida | Pasta | Fórmula (resumo) | O que mostra |
+|---|---|---|---|
+| `Chuva Mensal Média (mm)` | – | Média de `precip_total_mm` | Chuva média por mês |
+| `Chuva Anual Média (mm)` | Chuva | Soma de `precip_total_mm` por cidade e ano, depois média | Chuva média por ano |
+| `Chuva Normal (mm)` | Chuva | Média de `chuva_normal` | Chuva mensal normal (1991–2020) |
+| `Chuva vs Normal (%)` | – | `SUM(precip_total_mm) / SUM(chuva_normal) − 1` | Quanto choveu a mais ou a menos que o normal dos mesmos meses e cidades |
+| `Chuva vs Neutro (%)` | – | `Chuva Mensal Média ÷ Chuva Mensal Média dos meses neutros − 1` | Chuva do filtro atual comparada com a dos meses neutros |
+
+### El Niño e La Niña
+| Medida | Pasta | Fórmula (resumo) | O que mostra |
+|---|---|---|---|
+| `ONI Médio` | – | Média de `oni` | Índice médio do Pacífico (positivo = El Niño, negativo = La Niña) |
+| `% Meses El Niño` | El Niño e La Niña | Meses distintos com `fase = "El Niño"` ÷ meses distintos | Parcela do período em El Niño |
+| `% Meses La Niña` | El Niño e La Niña | Meses distintos com `fase = "La Niña"` ÷ meses distintos | Parcela do período em La Niña |
+
+### Tendência e previsão
+| Medida | Pasta | Fórmula (resumo) | O que mostra |
+|---|---|---|---|
+| `Tendência (°C por década)` | Tendência e previsão | Inclinação da regressão linear (`LINESTX`) de `Anomalia Temp` por ano × 10 | Ritmo de aquecimento |
+| `Anomalia Projetada 2030 (°C)` | Tendência e previsão | Mesma reta, calculada para o ano 2030 | Anomalia esperada em 2030 se a tendência continuar |
+
+### Cuidados com as medidas
+- **`Chuva vs Normal (%)` × `Chuva vs Neutro (%)`:** prefira `Chuva vs Normal (%)` para comparar fases. Ela compara cada mês com o normal do mesmo mês e da mesma cidade, então não é afetada pela época do ano. `Chuva vs Neutro (%)` compara médias de chuva em mm e mistura estações: El Niño e La Niña se concentram em certos meses do ano, e a diferença pode refletir só a estação chuvosa.
+- **`Chuva vs Neutro (%)`** ignora o filtro de `fase` no denominador. Com `fase` no eixo, a barra "Neutro" é sempre 0%.
+- **Medidas de chuva em mm** (`Chuva Mensal Média`, `Chuva Anual Média`, `Chuva Normal`) não servem para comparar cidades entre si (viés do ERA5, ver `docs/validacao.md`).
+- **`Chuva Anual Média (mm)`** só faz sentido com anos completos: com filtro de mês ou de fase, soma apenas os meses filtrados.
+- **Tendência e projeção** precisam de vários anos no filtro. Com poucos anos o resultado não é confiável.
