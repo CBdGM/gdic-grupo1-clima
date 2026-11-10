@@ -17,13 +17,13 @@ Cada integrante tem uma cópia do repositório (clone), trabalha **só na própr
 
 | # | Página | Pergunta | Responsável |
 |---|---|---|---|
-| 1 | Visão Geral | O que tem na base? | _(preencher)_ |
-| 2 | Aquecimento | As cidades estão esquentando? Quanto por década? | _(preencher)_ |
-| 3 | Calor extremo | Máximas e mínimas mudam igual? Há mais calor extremo? | _(preencher)_ |
-| 4 | El Niño e La Niña | Como mudam a chuva e a temperatura por região? | _(preencher)_ |
-| 5 | Eventos extremos | Os eventos recentes aparecem nos dados? | _(preencher)_ |
-| 6 | Previsão | O que esperar? | _(preencher)_ |
-| 7 | Ficha da cidade | Como é o clima de cada cidade em detalhe? (drill-through) | _(preencher)_ |
+| 1 | Visão Geral | O que tem na base? | Caio Montenegro |
+| 2 | Aquecimento | As cidades estão esquentando? Quanto por década? | Eduarda Albuquerque |
+| 3 | Calor extremo | Máximas e mínimas mudam igual? Há mais calor extremo? | João Pedro |
+| 4 | El Niño e La Niña | Como mudam a chuva e a temperatura por região? | Júlia Zovka |
+| 5 | Eventos extremos | Os eventos recentes aparecem nos dados? | Lucas Oliveira |
+| 6 | Previsão | O que esperar? | Caio Montenegro |
+| 7 | Ficha da cidade | Como é o clima de cada cidade em detalhe? (drill-through) | Rebecca Sophia Lima |
 
 A página oculta **Rascunho (análise inicial)** guarda os primeiros visuais de teste, para consulta. Pode ser apagada no final.
 
