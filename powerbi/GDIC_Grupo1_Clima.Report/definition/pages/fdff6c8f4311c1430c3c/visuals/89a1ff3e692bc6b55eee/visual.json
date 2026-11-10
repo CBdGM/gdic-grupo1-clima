@@ -1,0 +1,75 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.1.0/schema.json",
+  "name": "89a1ff3e692bc6b55eee",
+  "position": {
+    "x": 491,
+    "y": 510,
+    "z": 3,
+    "height": 210,
+    "width": 481,
+    "tabOrder": 3
+  },
+  "visual": {
+    "visualType": "lineChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "clima_cidades"
+                    }
+                  },
+                  "Property": "ano"
+                }
+              },
+              "queryRef": "clima_cidades.ano",
+              "nativeQueryRef": "Soma de ano",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "ONI Médio"
+                }
+              },
+              "queryRef": "Medidas.ONI Médio",
+              "nativeQueryRef": "ONI Médio"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Medidas"
+                  }
+                },
+                "Property": "ONI Médio"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}
