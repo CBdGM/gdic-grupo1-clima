@@ -62,6 +62,51 @@ Não existe coluna de anomalia de chuva: a comparação com o normal é feita pe
 | `ordem_fase` | inteiro, **oculta** | Power Query: La Niña = 1, Neutro = 2, El Niño = 3 | Ordena a coluna `fase` |
 | `ordem_intensidade` | inteiro, **oculta** | Power Query: Fraco = 1, Moderado = 2, Forte = 3, Muito forte = 4, demais = 0 | Ordena a coluna `intensidade` |
 
+### Região (`regiao`)
+
+| Coluna | Tipo | Fórmula | Para que serve |
+|---|---|---|---|
+| `regiao` | texto | Coluna calculada em DAX: `SWITCH` sobre `cidade` (tabela abaixo); cidade fora da lista recebe "Sem região" | Agrupar as 39 cidades em 10 regiões para comparar o efeito do El Niño e da La Niña |
+
+| Região | Cidades |
+|---|---|
+| México | Cidade do México, Monterrey |
+| América Central e Caribe | Cidade da Guatemala, San Salvador, Tegucigalpa, Manágua, San José, Cidade do Panamá, Havana, Santo Domingo, Porto Príncipe |
+| Norte da América do Sul | Bogotá, Medellín, Cartagena, Caracas |
+| Amazônia | Manaus, Belém |
+| Nordeste do Brasil | Fortaleza, Recife, Salvador, Petrolina |
+| Centro-Sudeste do Brasil | Brasília, Cuiabá, São Paulo, Rio de Janeiro |
+| Costa do Pacífico | Guayaquil, Piura, Lima |
+| Andes tropicais | Quito, La Paz |
+| Sul do Brasil e Bacia do Prata | Porto Alegre, Curitiba, Asunción, Buenos Aires, Montevidéu |
+| Chile e Argentina andina | Santiago, Antofagasta, Mendoza, Ushuaia |
+
+Fórmula:
+
+```dax
+regiao =
+SWITCH (
+    TRUE (),
+    clima_cidades[cidade] IN { "Cidade do México", "Monterrey" }, "México",
+    clima_cidades[cidade] IN { "Cidade da Guatemala", "San Salvador", "Tegucigalpa", "Manágua", "San José", "Cidade do Panamá", "Havana", "Santo Domingo", "Porto Príncipe" }, "América Central e Caribe",
+    clima_cidades[cidade] IN { "Bogotá", "Medellín", "Cartagena", "Caracas" }, "Norte da América do Sul",
+    clima_cidades[cidade] IN { "Manaus", "Belém" }, "Amazônia",
+    clima_cidades[cidade] IN { "Fortaleza", "Recife", "Salvador", "Petrolina" }, "Nordeste do Brasil",
+    clima_cidades[cidade] IN { "Brasília", "Cuiabá", "São Paulo", "Rio de Janeiro" }, "Centro-Sudeste do Brasil",
+    clima_cidades[cidade] IN { "Guayaquil", "Piura", "Lima" }, "Costa do Pacífico",
+    clima_cidades[cidade] IN { "Quito", "La Paz" }, "Andes tropicais",
+    clima_cidades[cidade] IN { "Porto Alegre", "Curitiba", "Asunción", "Buenos Aires", "Montevidéu" }, "Sul do Brasil e Bacia do Prata",
+    clima_cidades[cidade] IN { "Santiago", "Antofagasta", "Mendoza", "Ushuaia" }, "Chile e Argentina andina",
+    "Sem região"
+)
+```
+
+Cuidados:
+- A classificação é uma escolha do grupo (geografia + comportamento parecido no El Niño), não uma divisão oficial.
+- **Ao acrescentar cidades à base** (ex.: v1.2.0), inclua-as na fórmula; senão aparecem como "Sem região".
+- Regiões com poucas cidades (México, Amazônia e Andes tropicais têm 2) representam só essas cidades, não a região inteira.
+- Em `Chuva vs Normal (%)` por região, as cidades mais chuvosas pesam mais (a medida soma os mm antes de dividir).
+
 ## Medidas (tabela `Medidas`)
 
 Ficam em `powerbi/GDIC_Grupo1_Clima.SemanticModel/definition/tables/Medidas.tmdl`. São 21. A coluna **Pasta** é a pasta de exibição no painel *Dados* do Power BI; "–" indica medida ainda sem pasta (aparece solta na raiz da tabela).
