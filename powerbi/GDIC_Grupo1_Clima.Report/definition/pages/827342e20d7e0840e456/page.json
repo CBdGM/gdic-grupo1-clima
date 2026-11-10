@@ -4,5 +4,10 @@
   "displayName": "Visão Geral",
   "displayOption": "FitToPage",
   "height": 720,
-  "width": 1280
+  "width": 1280,
+  "pageBinding": {
+    "name": "55d7d41eb3b4ee095343",
+    "type": "Default",
+    "parameters": []
+  }
 }
