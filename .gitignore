@@ -16,3 +16,6 @@ desktop.ini
 
 # Editores
 .vscode/
+
+# Cache do script de validação de 2026 (as respostas da API não vão para o Git)
+data/extra/cache_2026/

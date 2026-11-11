@@ -1,0 +1,39 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "pv0000000000000cd01",
+  "position": {
+    "x": 16,
+    "y": 72,
+    "z": 3000,
+    "height": 76,
+    "width": 304,
+    "tabOrder": 3000
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "Temp Normal (°C)"
+                }
+              },
+              "queryRef": "Medidas.Temp Normal (°C)",
+              "nativeQueryRef": "Temp Normal (°C)",
+              "displayName": "Temperatura normal (°C)"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}
