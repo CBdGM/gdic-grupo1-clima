@@ -1,0 +1,39 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "pv0000000000000cd02",
+  "position": {
+    "x": 328,
+    "y": 72,
+    "z": 4000,
+    "height": 76,
+    "width": 304,
+    "tabOrder": 4000
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "Tendência (°C por década)"
+                }
+              },
+              "queryRef": "Medidas.Tendência (°C por década)",
+              "nativeQueryRef": "Tendência (°C por década)",
+              "displayName": "Tendência (°C por década)"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

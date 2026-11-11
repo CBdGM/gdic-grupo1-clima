@@ -1,0 +1,39 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "pv0000000000000cd03",
+  "position": {
+    "x": 640,
+    "y": 72,
+    "z": 5000,
+    "height": 76,
+    "width": 304,
+    "tabOrder": 5000
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "Anomalia Projetada 2030 (°C)"
+                }
+              },
+              "queryRef": "Medidas.Anomalia Projetada 2030 (°C)",
+              "nativeQueryRef": "Anomalia Projetada 2030 (°C)",
+              "displayName": "Anomalia projetada 2030 (°C)"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}
