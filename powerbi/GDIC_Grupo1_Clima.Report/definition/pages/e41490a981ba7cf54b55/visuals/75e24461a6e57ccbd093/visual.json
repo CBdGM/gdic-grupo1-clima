@@ -1,0 +1,115 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "75e24461a6e57ccbd093",
+  "position": {
+    "x": 7.8347360367253263,
+    "y": 368.23259372609033,
+    "z": 0,
+    "height": 341.79035960214236,
+    "width": 450.49732211170624,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "lineChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "clima_cidades"
+                    }
+                  },
+                  "Property": "ano"
+                }
+              },
+              "queryRef": "clima_cidades.ano",
+              "nativeQueryRef": "ano",
+              "active": true
+            }
+          ]
+        },
+        "Tooltips": {
+          "projections": []
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "Anomalia Temp (°C)"
+                }
+              },
+              "queryRef": "Medidas.Anomalia Temp (°C)",
+              "nativeQueryRef": "Anomalia Temp (°C)"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "% Meses Calor Extremo"
+                }
+              },
+              "queryRef": "Medidas.% Meses Calor Extremo",
+              "nativeQueryRef": "% Meses Calor Extremo"
+            }
+          ]
+        },
+        "Y2": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "clima_cidades"
+                        }
+                      },
+                      "Property": "temp_min_media"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(clima_cidades.temp_min_media)",
+              "nativeQueryRef": "Soma de temp_min_media"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Medidas"
+                  }
+                },
+                "Property": "Anomalia Temp (°C)"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

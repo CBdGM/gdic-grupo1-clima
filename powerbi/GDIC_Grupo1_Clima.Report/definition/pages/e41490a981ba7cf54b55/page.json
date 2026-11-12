@@ -4,5 +4,10 @@
   "displayName": "Calor extremo",
   "displayOption": "FitToPage",
   "height": 720,
-  "width": 1280
+  "width": 1280,
+  "pageBinding": {
+    "name": "bb0322903456a7290a78",
+    "type": "Default",
+    "parameters": []
+  }
 }
