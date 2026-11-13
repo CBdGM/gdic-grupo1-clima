@@ -57,8 +57,15 @@ table Medidas
 
 	measure '% Meses El Niño' =
 			DIVIDE (
-			    CALCULATE ( DISTINCTCOUNT ( clima_cidades[data] ), clima_cidades[fase] = "El Niño" ),
-			    DISTINCTCOUNT ( clima_cidades[data] )
+			    CALCULATE (
+			        DISTINCTCOUNT ( clima_cidades[data] ),
+			        REMOVEFILTERS ( clima_cidades[fase], clima_cidades[evento_enso], clima_cidades[intensidade] ),
+			        clima_cidades[fase] = "El Niño"
+			    ),
+			    CALCULATE (
+			        DISTINCTCOUNT ( clima_cidades[data] ),
+			        REMOVEFILTERS ( clima_cidades[fase], clima_cidades[evento_enso], clima_cidades[intensidade] )
+			    )
 			)
 		formatString: 0.0%;-0.0%;0.0%
 		displayFolder: El Niño e La Niña
@@ -66,8 +73,15 @@ table Medidas
 
 	measure '% Meses La Niña' =
 			DIVIDE (
-			    CALCULATE ( DISTINCTCOUNT ( clima_cidades[data] ), clima_cidades[fase] = "La Niña" ),
-			    DISTINCTCOUNT ( clima_cidades[data] )
+			    CALCULATE (
+			        DISTINCTCOUNT ( clima_cidades[data] ),
+			        REMOVEFILTERS ( clima_cidades[fase], clima_cidades[evento_enso], clima_cidades[intensidade] ),
+			        clima_cidades[fase] = "La Niña"
+			    ),
+			    CALCULATE (
+			        DISTINCTCOUNT ( clima_cidades[data] ),
+			        REMOVEFILTERS ( clima_cidades[fase], clima_cidades[evento_enso], clima_cidades[intensidade] )
+			    )
 			)
 		formatString: 0.0%;-0.0%;0.0%
 		displayFolder: El Niño e La Niña
