@@ -220,6 +220,38 @@ table Medidas
 		displayFolder: Eventos extremos
 		lineageTag: a1c3e5f7-2b4d-4f6a-8c1e-3d5f7a9b1c05
 
+	measure '% Cidades Aquecendo' =
+			DIVIDE (
+			    CALCULATE (
+			        DISTINCTCOUNT ( clima_cidades[cidade] ),
+			        FILTER ( VALUES ( clima_cidades[cidade] ), [Tendência (°C por década)] > 0 )
+			    ),
+			    CALCULATE ( DISTINCTCOUNT ( clima_cidades[cidade] ), ALL ( clima_cidades[cidade] ) )
+			)
+		formatString: 0.0%
+		displayFolder: Tendência e previsão
+		lineageTag: d93b4b4d-3c9a-4b97-a4ac-3ddd282f3074
+
+	measure '% Cidades Aquecendo (Texto)' = FORMAT ( [% Cidades Aquecendo], "0.0%" )
+		displayFolder: Tendência e previsão
+		lineageTag: c74c399d-7b44-4f8c-bc2c-060f666e507c
+
+	measure 'Cidades com Tendência Positiva' =
+			COUNTROWS (
+			    FILTER ( VALUES ( clima_cidades[cidade] ), CALCULATE ( [Tendência (°C por década)] ) > 0 )
+			)
+		formatString: 0
+		displayFolder: Tendência e previsão
+		lineageTag: d06ff8d9-a065-4e84-95c4-73a6dd428b05
+
+	measure 'Cidades sem Tendência Positiva' =
+			COUNTROWS (
+			    FILTER ( VALUES ( clima_cidades[cidade] ), CALCULATE ( [Tendência (°C por década)] ) <= 0 )
+			)
+		formatString: 0
+		displayFolder: Tendência e previsão
+		lineageTag: 0b85ce05-f874-446d-9c56-a8fc41532f91
+
 	column x
 		isHidden
 		formatString: 0
