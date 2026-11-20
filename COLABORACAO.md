@@ -25,8 +25,6 @@ Cada integrante tem uma cópia do repositório (clone), trabalha **só na própr
 | 6 | Previsão | O que esperar? | Caio Montenegro |
 | 7 | Ficha da cidade | Como é o clima de cada cidade em detalhe? (drill-through) | Rebecca Sophia Lima |
 
-A página oculta **Rascunho (análise inicial)** guarda os primeiros visuais de teste, para consulta. Pode ser apagada no final.
-
 ## Fluxo de cada sessão
 1. **Power BI fechado** → VS Code → **Sincronizar** (pull).
 2. Abrir o `.pbip` → *Atualizar*, se pedir.
