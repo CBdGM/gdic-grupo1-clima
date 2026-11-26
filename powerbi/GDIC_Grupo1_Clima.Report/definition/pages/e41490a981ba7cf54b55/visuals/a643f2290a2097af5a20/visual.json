@@ -1,0 +1,41 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.15.0/schema.json",
+  "name": "a643f2290a2097af5a20",
+  "position": {
+    "x": 241.79775280898869,
+    "y": 62.92134831460676,
+    "z": 3,
+    "height": 91.837371321617965,
+    "width": 221.20827700946242,
+    "tabOrder": 3
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "% Meses Seca Extrema"
+                }
+              },
+              "queryRef": "Medidas.% Meses Seca Extrema",
+              "nativeQueryRef": "% Meses Seca Extrema"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

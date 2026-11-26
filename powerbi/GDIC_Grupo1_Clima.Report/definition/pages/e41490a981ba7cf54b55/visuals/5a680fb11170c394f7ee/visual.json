@@ -1,0 +1,41 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.15.0/schema.json",
+  "name": "5a680fb11170c394f7ee",
+  "position": {
+    "x": 10.616040294459509,
+    "y": 62.81175624065979,
+    "z": 2,
+    "height": 91.837371321617965,
+    "width": 221.20827700946242,
+    "tabOrder": 2
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "% Meses Calor Extremo"
+                }
+              },
+              "queryRef": "Medidas.% Meses Calor Extremo",
+              "nativeQueryRef": "% Meses Calor Extremo"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

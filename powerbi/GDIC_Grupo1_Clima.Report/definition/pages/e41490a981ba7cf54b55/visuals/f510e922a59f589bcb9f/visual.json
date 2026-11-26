@@ -1,0 +1,41 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.15.0/schema.json",
+  "name": "f510e922a59f589bcb9f",
+  "position": {
+    "x": 473.70786516853923,
+    "y": 62.92134831460676,
+    "z": 4,
+    "height": 91.837371321617965,
+    "width": 221.20827700946242,
+    "tabOrder": 4
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "Máxima Absoluta (°C)"
+                }
+              },
+              "queryRef": "Medidas.Máxima Absoluta (°C)",
+              "nativeQueryRef": "Máxima Absoluta (°C)"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

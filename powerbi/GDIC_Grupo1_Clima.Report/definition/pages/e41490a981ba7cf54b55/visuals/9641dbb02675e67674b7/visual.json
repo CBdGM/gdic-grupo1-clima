@@ -1,0 +1,75 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.15.0/schema.json",
+  "name": "9641dbb02675e67674b7",
+  "position": {
+    "x": 931.23595505617971,
+    "y": 368.5393258426966,
+    "z": 7,
+    "height": 341.57303370786514,
+    "width": 340.67415730337075,
+    "tabOrder": 7
+  },
+  "visual": {
+    "visualType": "map",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "clima_cidades"
+                    }
+                  },
+                  "Property": "Local"
+                }
+              },
+              "queryRef": "clima_cidades.Local",
+              "nativeQueryRef": "Local",
+              "active": true
+            }
+          ]
+        },
+        "Size": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "% Meses Calor Extremo"
+                }
+              },
+              "queryRef": "Medidas.% Meses Calor Extremo",
+              "nativeQueryRef": "% Meses Calor Extremo"
+            }
+          ]
+        },
+        "Tooltips": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "Recorde Extremo"
+                }
+              },
+              "queryRef": "Medidas.Recorde Extremo",
+              "nativeQueryRef": "Recorde Extremo"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}
